@@ -2,6 +2,7 @@ const express = require("express");
 const app = new express();
 const router = require("./src/routes/api");
 require("dotenv").config();
+const morgan = require("morgan");
 
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
@@ -17,6 +18,7 @@ const path = require("path");
 //Middleware implement
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: false }));
 app.use(cookieParser());
