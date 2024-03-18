@@ -30,17 +30,26 @@ const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 3000 });
 app.use(limiter);
 //Databage
 
-let URI =
-  "mongodb+srv://<username>:<password>@cluster0.eq5zxrj.mongodb.net/TaskManagerRabbil";
-let OPTION = { user: "rakib", pass: "rakib1122", autoIndex: true };
-mongoose
-  .connect(URI, OPTION)
-  .then((res) => {
-    console.log("database connected");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+async function main() {
+  await mongoose.connect(
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@cluster0.eq5zxrj.mongodb.net/ConceptualProject`
+  );
+  console.log("Database Connected");
+}
+
+main().catch((err) => console.log(err));
+
+// let URI =
+//   "mongodb+srv://<username>:<password>@cluster0.eq5zxrj.mongodb.net/TaskManagerRabbil";
+// let OPTION = { user: "rakib", pass: "rakib1122", autoIndex: true };
+// mongoose
+//   .connect(URI, OPTION)
+//   .then((res) => {
+//     console.log("database connected");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 //Route
 
 app.use("/api/v1", router);
