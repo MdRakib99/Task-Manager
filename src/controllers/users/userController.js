@@ -13,7 +13,7 @@ exports.registration = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  let result = await loginUserService(req, res);
+  let result = await loginUserService(req);
   if (result.status === "success") {
     res.status(200).json(result);
   } else {
@@ -33,7 +33,11 @@ exports.profileDetails = async (req, res) => {
 
 exports.recoverVerifyEmail = async (req, res) => {
   let result = await verifyEmailService(req);
-  res.status(200).json(result);
+  if (result.status === "success") {
+    res.status(200).json(result);
+  } else {
+    res.status(404).json(result);
+  }
 };
 
 exports.recoverVerifyOTP = async (req, res) => {

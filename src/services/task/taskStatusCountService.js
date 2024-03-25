@@ -5,7 +5,7 @@ const taskStatusCountService = async (req) => {
     let email = req.headers["email"];
     let data = await taskModel.aggregate([
       { $match: { email: email } },
-      { $group: { _id: "$status", sum: { $count: {} } } },
+      { $group: { _id: "$status", sum: { $sum: 1 } } },
     ]);
     return { status: "success", data: data };
   } catch (error) {

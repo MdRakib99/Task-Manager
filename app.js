@@ -34,7 +34,7 @@ app.use(limiter);
 
 async function main() {
   await mongoose.connect(
-    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@cluster0.eq5zxrj.mongodb.net/TaskManagerRabbil`
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@cluster0.eq5zxrj.mongodb.net/ConceptualProject`
   );
   console.log("Database Connected");
 }

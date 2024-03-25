@@ -7,22 +7,21 @@ const verifyEmailService = async (req) => {
     let email = req.params.email;
     let OTPCode = Math.floor(100000 + Math.random() * 900000);
 
-    let matchStage = { $match: { email: email } };
-    let countStage = { $count: "total" };
-    let userCount = await userModel.aggregate([matchStage, countStage]);
+    // Check if the email exists
+    const emailExists = await userModel.exists({ email: email });
 
-    if (userCount.length > 0) {
+    if (emailExists) {
       // OTP Inserts
       await otpModel.create({ email: email, otp: OTPCode });
 
-      let emailText = `Your PIN Code is = ${OTPCode} `;
+      let emailText = `Your PIN Code is = ${OTPCode}`;
       console.log(emailText);
-      let emailSubject = `Task Manager Mern PIN Verificatoion`;
+      let emailSubject = `Task Manager Mern PIN Verification`;
       let sendEmail = await emailUtility(email, emailText, emailSubject);
 
       return { status: "success", data: sendEmail };
     } else {
-      return { status: "fail", data: " User Not Found" };
+      return { status: "fail", data: "User Not Found" };
     }
   } catch (error) {
     return { status: "fail", data: error.toString() };
